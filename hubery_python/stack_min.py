@@ -15,24 +15,26 @@ stackmin=[]
 valid_choice=('p','o','v','min')
 
 def pushit():
-    num_input=input('Please input a valid number: ').strip()
-    if num_input.isdecimal():
-        stack_depth=len(stack)
+    num_input_raw=input('Please input a valid number: ').strip()
+    try:
+        num_input=int(num_input_raw)
+        stack_depth = len(stack)
         stack.append(num_input)
         print('Push %s success' % num_input)
         if stack_depth == 0:
-            cur_min=num_input
+            cur_min = num_input
         else:
-            min_from_stack=stackmin[stack_depth - 1]
+            min_from_stack = stackmin[stack_depth - 1]
             if min_from_stack > num_input:
-                cur_min=num_input
+                cur_min = num_input
             else:
-                cur_min=min_from_stack
+                cur_min = min_from_stack
+        print("cur_min value is: %s" % cur_min)
 
         stackmin.append(cur_min)
 
-    else:
-        print('Not a valid number, Ignored!')
+    except ValueError:
+        print('[%s] Not a valid number, Ignored!' % num_input_raw)
 
 def popit():
     if len(stack) == 0:
@@ -50,6 +52,7 @@ def getmin():
 
 def viewstack():
     print(stack)
+    print(stackmin)
 
 
 CMDs = {'p': pushit, 'o': popit, 'v': viewstack, 'min':getmin }
@@ -57,7 +60,7 @@ CMDs = {'p': pushit, 'o': popit, 'v': viewstack, 'min':getmin }
 
 def showmenu():
     while True:
-        prt="""Please enter the choice below:
+        prt="""\n Please enter the choice below:
            p: Push data into Stack       o: Pop data from Stack
            v: View all data in Stack     min: Get the min value from Stack
            Enter q to quit the job
@@ -78,4 +81,3 @@ def showmenu():
 
 if __name__ == '__main__':
     showmenu()
-
